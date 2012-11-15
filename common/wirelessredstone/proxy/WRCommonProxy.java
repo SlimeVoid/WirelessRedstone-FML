@@ -46,7 +46,7 @@ public class WRCommonProxy implements ICommonProxy {
 	@Override
 	public String getMinecraftDir() {
 		// TODO Auto-generated method stub
-		return ".";
+		return Minecraft.getMinecraftDir().toString();
 	}
 
 	@Override
