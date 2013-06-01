@@ -11,9 +11,6 @@
  */
 package wirelessredstone.core;
 
-import wirelessredstone.client.network.ClientPacketHandler;
-import wirelessredstone.network.RedstoneWirelessConnectionHandler;
-import wirelessredstone.network.ServerPacketHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
@@ -24,66 +21,70 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
+import wirelessredstone.client.network.ClientPacketHandler;
+import wirelessredstone.network.RedstoneWirelessConnectionHandler;
+import wirelessredstone.network.ServerPacketHandler;
 
 /**
  * Wireless Redstone ModLoader initializing class.
- * 
+ *
  * @author ali4z
  */
 @Mod(
-		modid = "WirelessRedstoneCore",
-		name = "Wireless Redstone",
-		version = "1.7")
+        modid = "WirelessRedstoneCore",
+        name = "Wireless Redstone",
+        version = "1.7")
 @NetworkMod(
-		clientSideRequired = true,
-		serverSideRequired = false,
-		connectionHandler = RedstoneWirelessConnectionHandler.class,
-		clientPacketHandlerSpec = @SidedPacketHandler(
-				channels = { "WR" },
-				packetHandler = ClientPacketHandler.class),
-		serverPacketHandlerSpec = @SidedPacketHandler(
-				channels = { "WR" },
-				packetHandler = ServerPacketHandler.class))
+        clientSideRequired = true,
+        serverSideRequired = false,
+        connectionHandler = RedstoneWirelessConnectionHandler.class,
+        clientPacketHandlerSpec = @SidedPacketHandler(
+                channels = {"WR"},
+                packetHandler = ClientPacketHandler.class),
+        serverPacketHandlerSpec = @SidedPacketHandler(
+                channels = {"WR"},
+                packetHandler = ServerPacketHandler.class))
 /**
  * FML fascade class.
  * This class uses FML annotations and sorts initialization.
- * 
+ *
  * ConnectionHandler: RedstoneWirelessConnectionHandler
  * ClientPacketHandler: ClientPacketHandler
  * ServerPacketHandler: ServerPacketHandler
- * 
+ *
  * @author Eurymachus, ali4z
  */
 public class WirelessRedstone {
 
-	@Instance("WirelessRedstoneCore")
-	public static WirelessRedstone instance;
+    @Instance("WirelessRedstoneCore")
+    public static WirelessRedstone instance;
 
-	/**
-	 * Initialization
-	 * 
-	 * @param event
-	 */
-	@Init
-	public void WirelessRedstoneInit(FMLInitializationEvent event) {
-	}
+    /**
+     * Initialization
+     *
+     * @param event
+     */
+    @Init
+    public void WirelessRedstoneInit(FMLInitializationEvent event) {
+    }
 
-	/**
-	 * Pre-initialization
-	 * 
-	 * @param event
-	 */
-	@PreInit
-	public void WirelessRedstonePreInit(FMLPreInitializationEvent event) {
-	}
+    /**
+     * Pre-initialization
+     *
+     * @param event
+     */
+    @PreInit
+    public void WirelessRedstonePreInit(FMLPreInitializationEvent event) {
+        WRCore.preInitialize(event);
+    }
 
-	/**
-	 * Post-initialization
-	 * 
-	 * @param event
-	 */
-	@PostInit
-	public void WirelessRedstonePostInit(FMLPostInitializationEvent event) {
-		WRCore.initialize();
-	}
+    /**
+     * Post-initialization
+     *
+     * @param event
+     */
+    @PostInit
+    public void WirelessRedstonePostInit(FMLPostInitializationEvent event) {
+        WRCore.postInitialize();
+    }
 }
