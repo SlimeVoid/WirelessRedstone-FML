@@ -16,17 +16,17 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.src.ModLoader;
 import net.minecraft.util.Icon;
+import net.minecraftforge.common.Configuration;
 import wirelessredstone.addon.remote.api.IRemoteCommonProxy;
 import wirelessredstone.addon.remote.data.WirelessRemoteData;
 import wirelessredstone.addon.remote.items.ItemRedstoneWirelessRemote;
 import wirelessredstone.core.WRCore;
-import wirelessredstone.data.ConfigStoreRedstoneWireless;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 public class WRemoteCore {
     public static boolean isLoaded = false;
@@ -85,11 +85,13 @@ public class WRemoteCore {
      * - Remote item ID: (Remote.ID)<br>
      */
     private static void loadConfig(FMLPreInitializationEvent event) {
-        private static Configuration = new Configuration(event.getSuggestedConfigurationFile());
+		int pulseTimeInt;
+        Configuration config = new Configuration(event.getSuggestedConfigurationFile());
         config.load();
         remoteID = config.get(Configuration.CATEGORY_ITEM, "remoteID", 6245).getInt();
         duraTogg = config.get(Configuration.CATEGORY_GENERAL, "durabilityLoss", true).getBoolean(true);
-        pulseTime = config.get(Configuration.CATEGORY_GENERAL, "pulseTime", 2500).getLong();
+        pulseTimeInt = config.get(Configuration.CATEGORY_GENERAL, "pulseTime", 2500).getInt();
+		pulseTime = Long.parseLong(String.valueOf(pulseTimeInt));
         maxPulseThreads = config.get(Configuration.CATEGORY_GENERAL, "maxPulseThreads", 2).getInt();
         config.save();
     }

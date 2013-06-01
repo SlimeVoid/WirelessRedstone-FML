@@ -14,7 +14,9 @@ package wirelessredstone.addon.powerconfig.core;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+
+import net.minecraftforge.common.Configuration;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -22,7 +24,6 @@ import net.minecraft.item.ItemStack;
 import wirelessredstone.addon.powerconfig.items.ItemRedstoneWirelessPowerDirector;
 import wirelessredstone.api.ICommonProxy;
 import wirelessredstone.core.WRCore;
-import wirelessredstone.data.ConfigStoreRedstoneWireless;
 
 public class PCCore {
     public static boolean isLoaded = false;
@@ -37,7 +38,7 @@ public class PCCore {
     
     public static boolean preInitialize(FMLPreInitializationEvent event) {
 
-        loadConfig(event)
+        loadConfig(event);
 
         return true;
     }
@@ -62,7 +63,7 @@ public class PCCore {
     }
 
     private static void loadConfig(FMLPreInitializationEvent event) {
-        private static Configuration = new Configuration(event.getSuggestedConfigurationFile());
+        Configuration config = new Configuration(event.getSuggestedConfigurationFile());
         config.load();
         pdID = config.get(Configuration.CATEGORY_ITEM, "pdID", 6243).getInt();
         config.save();

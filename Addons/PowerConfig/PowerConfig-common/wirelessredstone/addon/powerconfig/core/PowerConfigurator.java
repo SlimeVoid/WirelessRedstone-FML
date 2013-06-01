@@ -67,7 +67,7 @@ public class PowerConfigurator {
      */
     @PreInit
     public void WirelessRemotePreInit(FMLPreInitializationEvent event) {
-        PCCore.preInitialize(event)
+        PCCore.preInitialize(event);
     }
 
     /**
