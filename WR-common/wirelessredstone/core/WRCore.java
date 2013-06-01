@@ -144,27 +144,23 @@ public class WRCore {
      */
     private static void addRecipes() {
         GameRegistry.addRecipe(new ItemStack(blockWirelessR, 1), new Object[]{
-                "IEI",
+                "IRI",
                 "RLR",
                 "IRI",
                 Character.valueOf('I'),
                 Item.ingotIron,
                 Character.valueOf('R'),
                 Item.redstone,
-                Character.valueOf('E'),
-                Item.enderPearl,
                 Character.valueOf('L'),
                 Block.lever});
         GameRegistry.addRecipe(new ItemStack(blockWirelessT, 1), new Object[]{
-                "IEI",
+                "IRI",
                 "RTR",
                 "IRI",
                 Character.valueOf('I'),
                 Item.ingotIron,
                 Character.valueOf('R'),
                 Item.redstone,
-                Character.valueOf('E'),
-                Item.enderPearl,
                 Character.valueOf('T'),
                 Block.torchRedstoneActive});
     }

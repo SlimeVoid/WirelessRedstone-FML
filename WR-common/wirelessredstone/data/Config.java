@@ -11,37 +11,17 @@
  */
 package wirelessredstone.data;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Properties;
-import java.util.Set;
-import java.util.TreeMap;
-
 import net.minecraftforge.common.Configuration;
 import wirelessredstone.core.WRCore;
 
-/**
- * Configuration store.<br>
- * Singleton pattern class.
- * 
- * @author ali4z
- */
 public class Config {
-	private Properties prop;
-	private File file;
-	private String name;
     public static int rxID;
     public static int txID;
 
-	public static void initConfig(Configuration config) {
+    public static void initConfig(Configuration config) {
         config.load();
         txID = config.get(Configuration.CATEGORY_BLOCK, "rxID", 179).getInt();
         rxID = config.get(Configuration.CATEGORY_BLOCK, "txID", 180).getInt();
         config.save();
-	}
+    }
 }
