@@ -16,110 +16,113 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.src.ModLoader;
 import net.minecraft.util.Icon;
+import net.minecraftforge.common.Configuration;
 import wirelessredstone.addon.remote.api.IRemoteCommonProxy;
 import wirelessredstone.addon.remote.data.WirelessRemoteData;
 import wirelessredstone.addon.remote.items.ItemRedstoneWirelessRemote;
 import wirelessredstone.core.WRCore;
-import wirelessredstone.data.ConfigStoreRedstoneWireless;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 public class WRemoteCore {
-	public static boolean isLoaded = false;
-	public static Item itemRemote;
-	public static int remoteID = 6245;
+    public static boolean isLoaded = false;
+    public static Item itemRemote;
+    public static int remoteID = 6245;
 
-	@SideOnly(Side.CLIENT)
-	public static boolean mouseDown, wasMouseDown, remotePulsing;
+    @SideOnly(Side.CLIENT)
+    public static boolean mouseDown, wasMouseDown, remotePulsing;
 
-	public static long pulseTime = 2500;
-	public static boolean duraTogg = true;
-	public static int maxPulseThreads = 2;
-	public static int remoteoff = 0;
-	public static int remoteon = 1;
+    public static long pulseTime = 2500;
+    public static boolean duraTogg = true;
+    public static int maxPulseThreads = 2;
+    public static int remoteoff = 0;
+    public static int remoteon = 1;
 
-	@SidedProxy(
-			clientSide = "wirelessredstone.addon.remote.client.proxy.WRemoteClientProxy",
-			serverSide = "wirelessredstone.addon.remote.proxy.WRemoteCommonProxy")
-	public static IRemoteCommonProxy proxy;
+    @SidedProxy(
+            clientSide = "wirelessredstone.addon.remote.client.proxy.WRemoteClientProxy",
+            serverSide = "wirelessredstone.addon.remote.proxy.WRemoteCommonProxy")
+    public static IRemoteCommonProxy proxy;
 
-	/**
-	 * Fires off all the canons.<br>
-	 * Loads configurations and initializes objects. Loads ModLoader related
-	 * stuff.
-	 */
-	public static boolean initialize() {
+    /**
+     * Fires off all the canons.<br>
+     * Loads configurations and initializes objects. Loads ModLoader related
+     * stuff.
+     */
+     
+    public static boolean preInitialize(FMLPreInitializationEvent event) {
 
-		loadConfig();
+        loadConfig( event);
 
-		proxy.init();
+        return true;
+    }
+    
+    public static boolean postInitialize() {
 
-		proxy.initPacketHandlers();
+        proxy.init();
 
-		initItems();
+        proxy.initPacketHandlers();
 
-		proxy.addOverrides();
+        initItems();
 
-		registerItems();
+        proxy.addOverrides();
 
-		proxy.registerRenderInformation();
+        registerItems();
 
-		addRecipes();
+        proxy.registerRenderInformation();
 
-		return true;
-	}
+        addRecipes();
 
-	/**
-	 * Loads configurations from the properties file.<br>
-	 * - Remote item ID: (Remote.ID)<br>
-	 */
-	private static void loadConfig() {
-		remoteID = (Integer) ConfigStoreRedstoneWireless
-				.getInstance("Remote")
-					.get("ID", Integer.class, new Integer(remoteID));
-		duraTogg = (Boolean) ConfigStoreRedstoneWireless
-				.getInstance("Remote")
-					.get("Durability", Boolean.class, new Boolean(duraTogg));
-		pulseTime = (Long) ConfigStoreRedstoneWireless
-				.getInstance("Remote")
-					.get("PulseDuration", Long.class, new Long(pulseTime));
-		maxPulseThreads = (Integer) ConfigStoreRedstoneWireless.getInstance(
-				"Remote").get(
-				"MaxPulseThreads",
-				Integer.class,
-				new Integer(maxPulseThreads));
-	}
+        return true;
+    }
 
-	/**
-	 * Initializes Item objects.
-	 */
-	private static void initItems() {
-		itemRemote = (new ItemRedstoneWirelessRemote(remoteID - 256))
-				.setUnlocalizedName("wirelessredstone.remote");
-	}
 
-	/**
-	 * Registers the item names
-	 */
-	private static void registerItems() {
-		LanguageRegistry.addName(itemRemote, "Wireless Remote");
-		LanguageRegistry.instance().addNameForObject(itemRemote, "de_DE", "Drahtloser Funkfernbedienung");
-	}
+    /**
+     * Loads configurations from the properties file.<br>
+     * - Remote item ID: (Remote.ID)<br>
+     */
+    private static void loadConfig(FMLPreInitializationEvent event) {
+		int pulseTimeInt;
+        Configuration config = new Configuration(event.getSuggestedConfigurationFile());
+        config.load();
+        remoteID = config.get(Configuration.CATEGORY_ITEM, "remoteID", 6245).getInt();
+        duraTogg = config.get(Configuration.CATEGORY_GENERAL, "durabilityLoss", true).getBoolean(true);
+        pulseTimeInt = config.get(Configuration.CATEGORY_GENERAL, "pulseTime", 2500).getInt();
+		pulseTime = Long.parseLong(String.valueOf(pulseTimeInt));
+        maxPulseThreads = config.get(Configuration.CATEGORY_GENERAL, "maxPulseThreads", 2).getInt();
+        config.save();
+    }
 
-	/**
-	 * Registers recipes with ModLoader<br>
-	 * - Recipe for Remote.
-	 */
-	private static void addRecipes() {
-		GameRegistry.addRecipe(new ItemStack(itemRemote, 1), new Object[] {
-				"I",
-				"T",
-				Character.valueOf('I'),
-				Block.torchRedstoneActive,
-				Character.valueOf('T'),
-				WRCore.blockWirelessT });
-	}
+    /**
+     * Initializes Item objects.
+     */
+    private static void initItems() {
+        itemRemote = (new ItemRedstoneWirelessRemote(remoteID - 256))
+                .setUnlocalizedName("wirelessredstone.remote");
+    }
+
+    /**
+     * Registers the item names
+     */
+    private static void registerItems() {
+        LanguageRegistry.addName(itemRemote, "Wireless Remote");
+        LanguageRegistry.instance().addNameForObject(itemRemote, "de_DE", "Drahtloser Funkfernbedienung");
+    }
+
+    /**
+     * Registers recipes with ModLoader<br>
+     * - Recipe for Remote.
+     */
+    private static void addRecipes() {
+        GameRegistry.addRecipe(new ItemStack(itemRemote, 1), new Object[] {
+                "I",
+                "T",
+                Character.valueOf('I'),
+                Block.torchRedstoneActive,
+                Character.valueOf('T'),
+                WRCore.blockWirelessT });
+    }
 }
