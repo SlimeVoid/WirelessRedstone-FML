@@ -27,13 +27,13 @@ import cpw.mods.fml.common.network.NetworkMod;
  * @author Eurymachus
  */
 @Mod(
-		modid = "PowerConfigurator",
-		name = "Wireless Redstone - Power Configurator",
-		version = "1.0",
-		dependencies = "after:WirelessRedstoneCore")
+        modid = "PowerConfigurator",
+        name = "Wireless Redstone - Power Configurator",
+        version = "1.0",
+        dependencies = "after:WirelessRedstoneCore")
 @NetworkMod(
-		clientSideRequired = true,
-		serverSideRequired = false)
+        clientSideRequired = true,
+        serverSideRequired = false)
 /**
  * FML fascade class.
  * This class uses FML annotations and sorts initialization.
@@ -47,35 +47,36 @@ import cpw.mods.fml.common.network.NetworkMod;
 public class PowerConfigurator {
 
 
-	@Instance("PowerConfigurator")
-	public static PowerConfigurator instance;
+    @Instance("PowerConfigurator")
+    public static PowerConfigurator instance;
 
-	/**
-	 * Initialization
-	 * 
-	 * @param event
-	 */
-	@Init
-	public void WirelessRemoteInit(FMLInitializationEvent event) {
-		
-	}
+    /**
+     * Initialization
+     * 
+     * @param event
+     */
+    @Init
+    public void WirelessRemoteInit(FMLInitializationEvent event) {
+        
+    }
 
-	/**
-	 * Pre-initialization
-	 * 
-	 * @param event
-	 */
-	@PreInit
-	public void WirelessRemotePreInit(FMLPreInitializationEvent event) {
-	}
+    /**
+     * Pre-initialization
+     * 
+     * @param event
+     */
+    @PreInit
+    public void WirelessRemotePreInit(FMLPreInitializationEvent event) {
+        PCCore.preInitialize(event);
+    }
 
-	/**
-	 * Post-initialization
-	 * 
-	 * @param event
-	 */
-	@PostInit
-	public void WirelessRemotePostInit(FMLPostInitializationEvent event) {
-		PCCore.initialize();
-	}
+    /**
+     * Post-initialization
+     * 
+     * @param event
+     */
+    @PostInit
+    public void WirelessRemotePostInit(FMLPostInitializationEvent event) {
+        PCCore.postInitialize();
+    }
 }
