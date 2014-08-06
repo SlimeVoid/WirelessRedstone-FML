@@ -1,0 +1,7 @@
+简体中文语言文件
+tile.wirelessredstone.receiver.name=无线红石接收器
+tile.wirelessredstone.transmitter.name=无线红石发送器
+item.wirelessredstone.name=示例物品
+itemGroup.wirelessredstone=无线红石
+wirelessredstone.device.receiver=无线红石接收仪器
+wirelessredstone.device.transmitter=无线红石发送仪器
