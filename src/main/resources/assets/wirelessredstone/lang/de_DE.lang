@@ -1,5 +1,9 @@
 Localization File
-tile.wirelessredstone.receiver.nameDrahtloser Empfanger
+tile.wirelessredstone.receiver.name=Drahtloser Empfänger
 tile.wirelessredstone.transmitter.name=Drahtloser Sender
-item.wirelessredstone.name=Example Item
+item.wirelessredstone.name=Beispiel-Item
 itemGroup.wirelessredstone=Drahtloser Redstone
+wirelessredstone.device.receiver=Drahtloses Empfangsgerät
+wirelessredstone.device.transmitter=Drahtloses Sendegerät
+wirelessredstone.receiver=Drahtloser Empfänger
+wirelessredstone.transmitter=Drahtloser Sender
